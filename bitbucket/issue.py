@@ -1,23 +1,22 @@
 # -*- coding: utf-8 -*-
+from .base import BitbucketApi
 from .issue_comment import IssueComment
 
 
-URLS = {
-    # Issues
-    'GET_ISSUES': 'repositories/%(username)s/%(repo_slug)s/issues/',
-    'GET_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
-    'CREATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/',
-    'UPDATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
-    'DELETE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
-}
-
-
-class Issue(object):
+class Issue(BitbucketApi):
     """ This class provide issue-related methods to Bitbucket objects."""
 
+    URLS = {
+        # Issues
+        'GET_ISSUES': 'repositories/%(username)s/%(repo_slug)s/issues/',
+        'GET_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+        'CREATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/',
+        'UPDATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+        'DELETE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+    }
+
     def __init__(self, bitbucket, issue_id=None):
-        self.bitbucket = bitbucket
-        self.bitbucket.URLS.update(URLS)
+        super(Issue, self).__init__(bitbucket)
         self.issue_id = issue_id
         self.comment = IssueComment(self)
 

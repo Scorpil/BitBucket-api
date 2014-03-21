@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
-URLS = {
-    # deploy keys
-    'GET_DEPLOY_KEYS': 'repositories/%(username)s/%(repo_slug)s/deploy-keys',
-    'SET_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys',
-    'GET_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys/%(key_id)s',
-    'DELETE_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys/%(key_id)s',
-}
+from .base import BitbucketApi
 
 
-class DeployKey(object):
+class DeployKey(BitbucketApi):
     """ This class provide services-related methods to Bitbucket objects."""
 
-    def __init__(self, bitbucket):
-        self.bitbucket = bitbucket
-        self.bitbucket.URLS.update(URLS)
+    URLS = {
+        # deploy keys
+        'GET_DEPLOY_KEYS': 'repositories/%(username)s/%(repo_slug)s/deploy-keys',
+        'SET_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys',
+        'GET_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys/%(key_id)s',
+        'DELETE_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys/%(key_id)s',
+    }
 
     def all(self, repo_slug=None):
         """ Get all ssh keys associated with a repo

@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
-URLS = {
-    # Issue comments
-    'GET_COMMENTS': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
-    'GET_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
-    'CREATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
-    'UPDATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
-    'DELETE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
-}
+from .base import BitbucketApi
 
 
-class IssueComment(object):
+class IssueComment(BitbucketApi):
     """ This class provide issue's comments related methods to Bitbucket objects."""
+
+    URLS = {
+        # Issue comments
+        'GET_COMMENTS': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
+        'GET_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+        'CREATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
+        'UPDATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+        'DELETE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+    }
 
     def __init__(self, issue):
         self.issue = issue
-        self.bitbucket = self.issue.bitbucket
-        self.bitbucket.URLS.update(URLS)
+        super(IssueComment, self).__init__(self.issue.bitbucket)
         self.issue_id = issue.issue_id
 
     def all(self, issue_id=None, repo_slug=None):

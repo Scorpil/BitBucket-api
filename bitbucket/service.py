@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
-URLS = {
-    # Get services (hooks)
-    'GET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
-    'GET_SERVICES': 'repositories/%(username)s/%(repo_slug)s/services/',
-    # Set services (hooks)
-    'SET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/',
-    'UPDATE_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
-    'DELETE_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
-}
+from .base import BitbucketApi
 
 
-class Service(object):
+class Service(BitbucketApi):
     """ This class provide services-related methods to Bitbucket objects."""
 
-    def __init__(self, bitbucket):
-        self.bitbucket = bitbucket
-        self.bitbucket.URLS.update(URLS)
+    URLS = {
+        # Get services (hooks)
+        'GET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
+        'GET_SERVICES': 'repositories/%(username)s/%(repo_slug)s/services/',
+        # Set services (hooks)
+        'SET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/',
+        'UPDATE_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
+        'DELETE_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
+    }
 
     def create(self, service, repo_slug=None, **kwargs):
         """ Add a service (hook) to one of your repositories.

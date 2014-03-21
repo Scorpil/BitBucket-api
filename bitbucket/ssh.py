@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
-URLS = {
-    # SSH keys
-    'GET_SSH_KEYS': 'ssh-keys/',
-    'GET_SSH_KEY': 'ssh-keys/%(key_id)s',
-    'SET_SSH_KEY': 'ssh-keys/',
-    'DELETE_SSH_KEY': 'ssh-keys/%(key_id)s',
-}
+from .base import BitbucketApi
 
 
-class SSH(object):
+class SSH(BitbucketApi):
     """ This class provide ssh-related methods to Bitbucket objects."""
 
-    def __init__(self, bitbucket):
-        self.bitbucket = bitbucket
-        self.bitbucket.URLS.update(URLS)
+    URLS = {
+        # SSH keys
+        'GET_SSH_KEYS': 'ssh-keys/',
+        'GET_SSH_KEY': 'ssh-keys/%(key_id)s',
+        'SET_SSH_KEY': 'ssh-keys/',
+        'DELETE_SSH_KEY': 'ssh-keys/%(key_id)s',
+    }
 
     def all(self):
         """ Get all ssh keys associated with your account.

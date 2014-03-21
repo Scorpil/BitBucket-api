@@ -2,23 +2,24 @@
 from tempfile import NamedTemporaryFile
 from zipfile import ZipFile
 
-
-URLS = {
-    'CREATE_REPO': 'repositories/',
-    'GET_REPO': 'repositories/%(username)s/%(repo_slug)s/',
-    'UPDATE_REPO': 'repositories/%(username)s/%(repo_slug)s/',
-    'DELETE_REPO': 'repositories/%(username)s/%(repo_slug)s/',
-    # Get archive
-    'GET_ARCHIVE': 'repositories/%(username)s/%(repo_slug)s/%(format)s/master/',
-}
+from .base import BitbucketApi
 
 
-class Repository(object):
+class Repository(BitbucketApi):
     """ This class provide repository-related methods to Bitbucket objects."""
+
+    URLS = {
+        'CREATE_REPO': 'repositories/',
+        'GET_REPO': 'repositories/%(username)s/%(repo_slug)s/',
+        'UPDATE_REPO': 'repositories/%(username)s/%(repo_slug)s/',
+        'DELETE_REPO': 'repositories/%(username)s/%(repo_slug)s/',
+        # Get archive
+        'GET_ARCHIVE': 'repositories/%(username)s/%(repo_slug)s/%(format)s/master/',
+    }
 
     def __init__(self, bitbucket):
         self.bitbucket = bitbucket
-        self.bitbucket.URLS.update(URLS)
+        self.bitbucket.URLS.update(self.URLS)
 
     def _get_files_in_dir(self, repo_slug=None, dir='/'):
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
