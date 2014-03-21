@@ -20,6 +20,8 @@ from .repository import Repository
 from .service import Service
 from .ssh import SSH
 from .deploy_key import DeployKey
+from .user import User
+from .group_privs import GroupPrivs
 
 
 #  ========
@@ -56,6 +58,8 @@ class Bitbucket(object):
         self.ssh = SSH(self)
         self.issue = Issue(self)
         self.deploy_key = DeployKey(self)
+        self.user = User(self)
+        self.group_privs = GroupPrivs(self)
 
         self.access_token = None
         self.access_token_secret = None
@@ -213,7 +217,7 @@ class Bitbucket(object):
     #  = High lvl functions =
     #  ======================
 
-    def dispatch(self, method, url, auth=None, params=None, **kwargs):
+    def dispatch(self, method, url, auth=None, params=None, body=None, **kwargs):
         """ Send HTTP request, with given method,
             credentials and data to the given URL,
             and return the success and the result on success.
@@ -223,7 +227,7 @@ class Bitbucket(object):
             url=url,
             auth=auth,
             params=params,
-            data=kwargs)
+            data=body or kwargs)
         s = Session()
         resp = s.send(r.prepare())
         status = resp.status_code

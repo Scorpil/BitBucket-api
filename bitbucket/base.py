@@ -9,3 +9,8 @@ class BitbucketApi(object):
     def __init__(self, bitbucket):
         self.bitbucket = bitbucket
         self.bitbucket.URLS.update(self.URLS)
+
+    def _get(self, url_key):
+        """ Shortcut for simple GET requests. """
+        url = self.bitbucket.url(url_key)
+        return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
